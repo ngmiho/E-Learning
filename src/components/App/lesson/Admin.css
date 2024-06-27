@@ -1,0 +1,14 @@
+.toastify-success {
+    color: green;
+    font-weight: bold;
+}
+
+.toastify-danger {
+    color: orangered;
+    font-weight: bold;
+}
+
+.toastify-error {
+    color: red;
+    font-weight: bold;
+}
