@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { format, formatDate } from "date-fns";
+import { format } from "date-fns";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "./Admin.css";
@@ -198,7 +198,7 @@ export default function Admin() {
   const postLesson = () => {
     var formData = new FormData();
     handleFormData(formData, bodyLesson);
-    formData.append("createdAt", formatDate(new Date(), "yyyy-MM-dd"));
+    formData.append("createdAt", format(new Date(), "yyyy-MM-dd"));
     axios
       .post("http://localhost:3001/api/v1/lessons", formData)
       .then((res) => {
@@ -234,7 +234,7 @@ export default function Admin() {
     formData.append("order", bodyLesson.order);
     formData.append("locationPath", bodyLesson.locationPath);
     formData.append("uploadedBy", bodyLesson.uploadedBy);
-    formData.append("updatedAt", formatDate(new Date(), "yyyy-MM-dd"));
+    formData.append("updatedAt", format(new Date(), "yyyy-MM-dd"));
     formData.append("file", bodyLesson.file);
   };
 
@@ -603,7 +603,7 @@ export default function Admin() {
             <td>
               <button
                 type="button"
-                className="btn btn-outline-danger"
+                className="btn btn-outline-danger me-2"
                 onClick={() => destroy(e.id, e.locationPath)}
                 style={{ width: 70 }}
               >
@@ -747,7 +747,7 @@ export default function Admin() {
             id="detailsUploadedBy"
             type="text"
             className="form-control"
-            value={userId === "1" ? "Admin1" : "Admin2"}
+            value={userId === "1" ? "Admin1" : "Null"}
             disabled
           />
         </div>
@@ -1088,7 +1088,21 @@ export default function Admin() {
   }
 
   return (
-    <div className="row mx-5">
+    <div className="row">
+      <div className="row justify-content-md-end">
+        <div className="col-md-1">
+          <a
+            href="/login"
+            type="button"
+            className="btn btn-outline-secondary"
+            //onClick={() => localStorage.removeItem("token")}
+            onClick={() => sessionStorage.removeItem("token")}
+            style={{ width: 90 }}
+          >
+            Log out
+          </a>
+        </div>
+      </div>
       <div className="col-md-12 my-4">
         <h1
           className="card-header border-bottom border-primary-subtle border-5 mb-3"
@@ -1109,9 +1123,9 @@ export default function Admin() {
             {Details()}
           </div>
         </div>
-        <div className="row ps-4">
+        <div className="row">
           <div className="col-md-12 my-4">
-            <div className="table table-responsive-xl mt-5">
+            <div className="table mt-5">
               <h2 align="middle">Lesson List Table</h2>
               <table className="table border border-info table-striped table-hover">
                 <thead className="align-middle active">
@@ -1150,7 +1164,7 @@ export default function Admin() {
                     <th scope="col">Created At</th>
                     <th scope="col">Updated At</th>
                     <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col" className="me-2"></th>
                   </tr>
                 </thead>
                 {rows(currentRows)}
